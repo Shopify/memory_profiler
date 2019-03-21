@@ -34,11 +34,6 @@ module MemoryProfiler
     end
 
     def start
-      GC.start
-      GC.start
-      GC.start
-      GC.disable
-
       @generation = GC.count
       ObjectSpace.trace_object_allocations_start
     end
@@ -49,9 +44,12 @@ module MemoryProfiler
       retained = StatHash.new.compare_by_identity
 
       GC.enable
-      GC.start
-      GC.start
-      GC.start
+      GC.start(full_mark: true, immediate_sweep: true)
+      GC.start(full_mark: true, immediate_sweep: true)
+      GC.start(full_mark: true, immediate_sweep: true)
+      GC.start(full_mark: true, immediate_sweep: true)
+      GC.start(full_mark: true, immediate_sweep: true)
+      GC.start(full_mark: true, immediate_sweep: true)
 
       # Caution: Do not allocate any new Objects between the call to GC.start and the completion of the retained
       #          lookups. It is likely that a new Object would reuse an object_id from a GC'd object.
