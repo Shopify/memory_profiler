@@ -43,12 +43,6 @@ module MemoryProfiler
       allocated = object_list(generation)
       retained = StatHash.new.compare_by_identity
 
-      GC.enable
-      GC.start(full_mark: true, immediate_sweep: true)
-      GC.start(full_mark: true, immediate_sweep: true)
-      GC.start(full_mark: true, immediate_sweep: true)
-      GC.start(full_mark: true, immediate_sweep: true)
-      GC.start(full_mark: true, immediate_sweep: true)
       GC.start(full_mark: true, immediate_sweep: true)
 
       # Caution: Do not allocate any new Objects between the call to GC.start and the completion of the retained
